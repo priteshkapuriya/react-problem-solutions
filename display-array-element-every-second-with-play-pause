@@ -1,0 +1,38 @@
+/* Assume a static array of 5 names create a react component which renders each name for 1 second.
+It should start with the first name in the array and move forward, it should start from the beginning after the last element.
+Also add a button to pause/play the iteration. On loading the application it should be in play state.
+On clicking the pause button the iteration should pause on the current name and button should covert to play button.
+
+//let arr ["a", "b", "c", "d", "e"] */
+
+import { useState, useEffect } from "react";
+
+export default function App() {
+  const arr = ["a", "b", "c", "d", "e"];
+  let [btnValue, setBtnValue] = useState("pause");
+  let [index, setIndex] = useState(0);
+
+  const onClickHandler = () => {
+    //do something
+    if(btnValue === "pause") {
+      setBtnValue("play")
+    } else {
+      setBtnValue("pause");
+    }
+  };
+
+  useEffect(() => {
+    const tick = () => btnValue === "pause" ? 
+    setIndex(i => i + 1): clearInterval(id);
+
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  });
+
+  return (
+    <div className="App">
+     <div>{arr[index % arr.length]} </div>
+      <button onClick={onClickHandler}> {btnValue} </button>
+    </div>
+  );
+}
